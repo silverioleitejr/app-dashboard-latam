@@ -1,0 +1,198 @@
+[
+  {
+    "country-code": "BR",
+    "country-name": "Brasil",
+    "url-flag": "https://flagcdn.com/w80/br.png",
+    "city-office": "Brasília",
+    "product-owner-name": "Carlos Eduardo Silva",
+    "qty-stage": 640,
+    "qty-core": 486,
+    "qty-mart": 142,
+    "list-mart": [
+      "mart_sales_br",
+      "mart_commercial_excellence",
+      "mart_supply_chain",
+      "mart_patient_journey",
+      "mart_finance_controlling",
+      "mart_medical_affairs"
+    ],
+    "storage-mart-gb": 68400,
+    "storate-core-gb": 220774
+  },
+  {
+    "country-code": "AR",
+    "country-name": "Argentina",
+    "url-flag": "https://flagcdn.com/w80/ar.png",
+    "city-office": "Buenos Aires",
+    "product-owner-name": "Martín Gómez",
+    "qty-stage": 340,
+    "qty-core": 257,
+    "qty-mart": 78,
+    "list-mart": [
+      "mart_sales_ar",
+      "mart_market_access",
+      "mart_supply_chain",
+      "mart_finance_ar",
+      "mart_crm_engagement"
+    ],
+    "storage-mart-gb": 31200,
+    "storate-core-gb": 99430
+  },
+  {
+    "country-code": "MX",
+    "country-name": "México",
+    "url-flag": "https://flagcdn.com/w80/mx.png",
+    "city-office": "Cidade do México",
+    "product-owner-name": "Alejandra Hernández",
+    "qty-stage": 290,
+    "qty-core": 212,
+    "qty-mart": 64,
+    "list-mart": [
+      "mart_sales_mx",
+      "mart_omnicanal_crm",
+      "mart_patient_support",
+      "mart_supply_chain",
+      "mart_finance_mx"
+    ],
+    "storage-mart-gb": 27600,
+    "storate-core-gb": 88473
+  },
+  {
+    "country-code": "CL",
+    "country-name": "Chile",
+    "url-flag": "https://flagcdn.com/w80/cl.png",
+    "city-office": "Santiago",
+    "product-owner-name": "Camila Rojas",
+    "qty-stage": 180,
+    "qty-core": 131,
+    "qty-mart": 42,
+    "list-mart": [
+      "mart_sales_cl",
+      "mart_hospital_tenders",
+      "mart_supply_chain",
+      "mart_finance_cl"
+    ],
+    "storage-mart-gb": 14200,
+    "storate-core-gb": 43827
+  },
+  {
+    "country-code": "EC",
+    "country-name": "Equador",
+    "url-flag": "https://flagcdn.com/w80/ec.png",
+    "city-office": "Quito",
+    "product-owner-name": "Diego Andrade",
+    "qty-stage": 98,
+    "qty-core": 73,
+    "qty-mart": 24,
+    "list-mart": [
+      "mart_sales_ec",
+      "mart_commercial_ec",
+      "mart_inventory_ec"
+    ],
+    "storage-mart-gb": 6800,
+    "storate-core-gb": 21811
+  },
+  {
+    "country-code": "UY",
+    "country-name": "Uruguai",
+    "url-flag": "https://flagcdn.com/w80/uy.png",
+    "city-office": "Montevidéu",
+    "product-owner-name": "Lucía Fernández",
+    "qty-stage": 84,
+    "qty-core": 62,
+    "qty-mart": 19,
+    "list-mart": [
+      "mart_sales_uy",
+      "mart_diagnostics_uy",
+      "mart_finance_uy"
+    ],
+    "storage-mart-gb": 4900,
+    "storate-core-gb": 14848
+  },
+  {
+    "country-code": "VE",
+    "country-name": "Venezuela",
+    "url-flag": "https://flagcdn.com/w80/ve.png",
+    "city-office": "Caracas",
+    "product-owner-name": "Andrés Mendoza",
+    "qty-stage": 76,
+    "qty-core": 57,
+    "qty-mart": 16,
+    "list-mart": [
+      "mart_sales_ve",
+      "mart_distribution_ve",
+      "mart_regulatory_ccav"
+    ],
+    "storage-mart-gb": 4100,
+    "storate-core-gb": 13209
+  },
+  {
+    "country-code": "CR",
+    "country-name": "Costa Rica",
+    "url-flag": "https://flagcdn.com/w80/cr.png",
+    "city-office": "San José",
+    "product-owner-name": "Valeria Vargas",
+    "qty-stage": 65,
+    "qty-core": 48,
+    "qty-mart": 15,
+    "list-mart": [
+      "mart_sales_ccav",
+      "mart_hub_central_america",
+      "mart_patient_access_cr"
+    ],
+    "storage-mart-gb": 3200,
+    "storate-core-gb": 9932
+  },
+  {
+    "country-code": "PY",
+    "country-name": "Paraguai",
+    "url-flag": "https://flagcdn.com/w80/py.png",
+    "city-office": "Assunção",
+    "product-owner-name": "Rodrigo Benítez",
+    "qty-stage": 56,
+    "qty-core": 41,
+    "qty-mart": 12,
+    "list-mart": [
+      "mart_sales_py",
+      "mart_distributor_sellout",
+      "mart_finance_py"
+    ],
+    "storage-mart-gb": 2700,
+    "storate-core-gb": 8601
+  },
+  {
+    "country-code": "BO",
+    "country-name": "Bolívia",
+    "url-flag": "https://flagcdn.com/w80/bo.png",
+    "city-office": "La Paz",
+    "product-owner-name": "Fernando Quispe",
+    "qty-stage": 48,
+    "qty-core": 35,
+    "qty-mart": 10,
+    "list-mart": [
+      "mart_sales_bo",
+      "mart_commercial_bo",
+      "mart_supply_bo"
+    ],
+    "storage-mart-gb": 1950,
+    "storate-core-gb": 6348
+  },
+  {
+    "country-code": "DO",
+    "country-name": "Caribe",
+    "url-flag": "https://flagcdn.com/w80/do.png",
+    "city-office": "Santo Domingo",
+    "product-owner-name": "Gabriela Reyes",
+    "qty-stage": 40,
+    "qty-core": 29,
+    "qty-mart": 9,
+    "list-mart": [
+      "mart_sales_caribe",
+      "mart_island_distribution",
+      "mart_finance_ccav"
+    ],
+    "storage-mart-gb": 1600,
+    "storate-core-gb": 5222
+  }
+]
+
