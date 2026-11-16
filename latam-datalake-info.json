@@ -9,6 +9,19 @@
     "qty-stage": 640,
     "qty-core": 486,
     "qty-mart": 142,
+    "redshift_schema": [
+      "lat_bra_stage",
+      "lat_bra_core",
+      "lat_bra_mart",
+      "lat_bra_gsheet"
+    ],
+    "folders-name-dbt": [
+      "dbt_br_commercial",
+      "dbt_br_supply_chain",
+      "dbt_br_patient_services",
+      "dbt_br_finance",
+      "dbt_br_medical"
+    ],
     "list-mart": [
       "mart_sales_br",
       "mart_commercial_excellence",
@@ -30,6 +43,18 @@
     "qty-stage": 340,
     "qty-core": 257,
     "qty-mart": 78,
+    "redshift_schema": [
+      "lat_arg_stage",
+      "lat_arg_core",
+      "lat_arg_mart",
+      "lat_arg_gsheet"
+    ],
+    "folders-name-dbt": [
+      "dbt_ar_commercial",
+      "dbt_ar_market_access",
+      "dbt_ar_supply",
+      "dbt_ar_finance"
+    ],
     "list-mart": [
       "mart_sales_ar",
       "mart_market_access",
@@ -44,12 +69,24 @@
     "country-code": "mex",
     "country-name": "Mexico",
     "url-flag": "https://flagcdn.com/w80/mx.png",
-    "city-office": "Cidade do México",
+    "city-office": "Mexico City",
     "office-address": "Cerrada de Bezares 9, Colonia Lomas de Bezares, Alcaldía Miguel Hidalgo, C.P. 11910, Ciudad de México, México",
     "product-owner-name": "Alejandra Hernández",
     "qty-stage": 290,
     "qty-core": 212,
     "qty-mart": 64,
+    "redshift_schema": [
+      "lat_mex_stage",
+      "lat_mex_core",
+      "lat_mex_mart",
+      "lat_mex_gsheet"
+    ],
+    "folders-name-dbt": [
+      "dbt_mx_commercial",
+      "dbt_mx_omnicanal",
+      "dbt_mx_patient_support",
+      "dbt_mx_finance"
+    ],
     "list-mart": [
       "mart_sales_mx",
       "mart_omnicanal_crm",
@@ -70,6 +107,18 @@
     "qty-stage": 180,
     "qty-core": 131,
     "qty-mart": 42,
+    "redshift_schema": [
+      "lat_chl_stage",
+      "lat_chl_core",
+      "lat_chl_mart",
+      "lat_chl_gsheet"
+    ],
+    "folders-name-dbt": [
+      "dbt_cl_commercial",
+      "dbt_cl_public_tenders",
+      "dbt_cl_supply_chain",
+      "dbt_cl_finance"
+    ],
     "list-mart": [
       "mart_sales_cl",
       "mart_hospital_tenders",
@@ -89,6 +138,17 @@
     "qty-stage": 98,
     "qty-core": 73,
     "qty-mart": 24,
+    "redshift_schema": [
+      "lat_ecu_stage",
+      "lat_ecu_core",
+      "lat_ecu_mart",
+      "lat_ecu_gsheet"
+    ],
+    "folders-name-dbt": [
+      "dbt_ec_commercial",
+      "dbt_ec_inventory",
+      "dbt_ec_finance"
+    ],
     "list-mart": [
       "mart_sales_ec",
       "mart_commercial_ec",
@@ -101,12 +161,23 @@
     "country-code": "ury",
     "country-name": "Uruguay",
     "url-flag": "https://flagcdn.com/w80/uy.png",
-    "city-office": "Montevidéu",
+    "city-office": "Montevideo",
     "office-address": "Dr. Luis Bonavita 1266, Edificio WTC Montevideo, Torre IV, Piso 33, 11300 Montevideo, Uruguay",
     "product-owner-name": "Lucía Fernández",
     "qty-stage": 84,
     "qty-core": 62,
     "qty-mart": 19,
+    "redshift_schema": [
+      "lat_ury_stage",
+      "lat_ury_core",
+      "lat_ury_mart",
+      "lat_ury_gsheet"
+    ],
+    "folders-name-dbt": [
+      "dbt_uy_commercial",
+      "dbt_uy_diagnostics",
+      "dbt_uy_finance"
+    ],
     "list-mart": [
       "mart_sales_uy",
       "mart_diagnostics_uy",
@@ -125,6 +196,17 @@
     "qty-stage": 76,
     "qty-core": 57,
     "qty-mart": 16,
+    "redshift_schema": [
+      "lat_ven_stage",
+      "lat_ven_core",
+      "lat_ven_mart",
+      "lat_ven_gsheet"
+    ],
+    "folders-name-dbt": [
+      "dbt_ve_commercial",
+      "dbt_ve_distribution",
+      "dbt_ccav_regulatory"
+    ],
     "list-mart": [
       "mart_sales_ve",
       "mart_distribution_ve",
@@ -143,6 +225,17 @@
     "qty-stage": 65,
     "qty-core": 48,
     "qty-mart": 15,
+    "redshift_schema": [
+      "lat_cri_stage",
+      "lat_cri_core",
+      "lat_cri_mart",
+      "lat_cri_gsheet"
+    ],
+    "folders-name-dbt": [
+      "dbt_cr_hub_ccav",
+      "dbt_cr_patient_access",
+      "dbt_cr_commercial"
+    ],
     "list-mart": [
       "mart_sales_ccav",
       "mart_hub_central_america",
@@ -155,12 +248,23 @@
     "country-code": "pry",
     "country-name": "Paraguay",
     "url-flag": "https://flagcdn.com/w80/py.png",
-    "city-office": "Assunção",
+    "city-office": "Asunción",
     "office-address": "Av. Santa Teresa entre Aviadores del Chaco y Herminio Maldonado, Paseo La Galería, Torre 2, Piso 16, Asunción, Paraguay",
     "product-owner-name": "Rodrigo Benítez",
     "qty-stage": 56,
     "qty-core": 41,
     "qty-mart": 12,
+    "redshift_schema": [
+      "lat_pry_stage",
+      "lat_pry_core",
+      "lat_pry_mart",
+      "lat_pry_gsheet"
+    ],
+    "folders-name-dbt": [
+      "dbt_py_commercial",
+      "dbt_py_sellout",
+      "dbt_py_finance"
+    ],
     "list-mart": [
       "mart_sales_py",
       "mart_distributor_sellout",
@@ -179,6 +283,16 @@
     "qty-stage": 48,
     "qty-core": 35,
     "qty-mart": 10,
+    "redshift_schema": [
+      "lat_bol_stage",
+      "lat_bol_core",
+      "lat_bol_mart",
+      "lat_bol_gsheet"
+    ],
+    "folders-name-dbt": [
+      "dbt_bo_commercial",
+      "dbt_bo_supply"
+    ],
     "list-mart": [
       "mart_sales_bo",
       "mart_commercial_bo",
@@ -197,6 +311,16 @@
     "qty-stage": 40,
     "qty-core": 29,
     "qty-mart": 9,
+    "redshift_schema": [
+      "lat_dom_stage",
+      "lat_dom_core",
+      "lat_dom_mart",
+      "lat_dom_gsheet"
+    ],
+    "folders-name-dbt": [
+      "dbt_do_caribe_sales",
+      "dbt_do_island_dist"
+    ],
     "list-mart": [
       "mart_sales_caribe",
       "mart_island_distribution",
