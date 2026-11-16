@@ -36,10 +36,26 @@
     padding: var(--s5) var(--s6); position: relative; z-index: 1; }
   .module-header h1 { margin: 0; color: var(--og1-blue); font-size: 30px; line-height: 39px; font-weight: 400; }
   .module-header p { margin: var(--s1) 0 0; color: var(--og1-grey-700); font-size: 16px; line-height: 20px; }
-  .totals { display: flex; gap: var(--s6); }
+  .totals { display: flex; gap: var(--s6); align-items: center; }
   .totals div { text-align: right; }
   .totals b { display: block; font-size: 40px; line-height: 48px; font-weight: 200; color: var(--pure-black); font-variant-numeric: tabular-nums; }
   .totals span { font-size: 14px; line-height: 19px; color: var(--og1-grey-700); }
+
+  /* Componente Toggle (Exibir Todos os Cards) */
+  .header-right { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s6); }
+  .toggle-ctrl { display: flex; align-items: center; gap: var(--s3); padding-left: var(--s6);
+    border-left: 1px solid var(--og1-grey-300); cursor: pointer; user-select: none; }
+  .toggle-ctrl .toggle-info { text-align: right; }
+  .toggle-ctrl .toggle-title { display: block; font-size: 15px; font-weight: 600; color: var(--pure-black); line-height: 20px; }
+  .toggle-ctrl .toggle-status { display: block; font-size: 12px; color: var(--og1-grey-700); line-height: 16px; }
+  .switch { position: relative; display: inline-block; width: 46px; height: 24px; flex-shrink: 0; }
+  .switch input { opacity: 0; width: 0; height: 0; }
+  .slider { position: absolute; inset: 0; background-color: var(--og1-grey-300); border-radius: 24px; transition: .2s; }
+  .slider::before { position: absolute; content: ""; height: 18px; width: 18px; left: 3px; bottom: 3px;
+    background-color: var(--white); border-radius: 50%; transition: .2s; box-shadow: 0 1px 3px rgba(0,0,0,.25); }
+  .switch input:checked + .slider { background-color: var(--og1-blue); }
+  .switch input:checked + .slider::before { transform: translateX(22px); }
+  .switch input:focus-visible + .slider { outline: 2px solid var(--pure-black); outline-offset: 2px; }
 
   /* Área do mapa: gradiente do hero */
   main { background: var(--hero-gradient); padding: var(--s4) var(--s3); }
@@ -49,20 +65,22 @@
   .grade { fill: none; stroke: var(--og1-grey-300); stroke-width: .6; opacity: .6; }
   .sombra { fill: var(--pure-black); opacity: .10; }
   .pais { fill: var(--og1-grey-300); stroke: var(--white); stroke-width: .8; stroke-linejoin: round; }
-  .pais.projeto { fill: var(--og1-blue); }
+  .pais.projeto { fill: var(--og1-blue); cursor: pointer; transition: fill .15s, stroke-width .15s; }
   .pais.ccav.projeto { fill: var(--og1-grey-700); }
-  .pais.on { stroke: var(--pure-black); stroke-width: 1.8; }
+  .pais.on, .pais.selected { stroke: var(--pure-black); stroke-width: 2; }
+  .capital[data-projeto="1"] { cursor: pointer; }
 
   /* Sedes: linha, marcador e caixa de KPI */
-  .leader { stroke: var(--og1-grey-700); stroke-width: 1; fill: none; opacity: .8; }
-  .site.on .leader { stroke: var(--pure-black); stroke-width: 1.8; opacity: 1; }
-  .site .dot { stroke: var(--white); stroke-width: 2; }
+  .leader { stroke: var(--og1-grey-700); stroke-width: 1; fill: none; opacity: .8; transition: opacity .2s; }
+  .site.on .leader, .site.selected .leader { stroke: var(--pure-black); stroke-width: 1.8; opacity: 1; }
+  .site .dot { stroke: var(--white); stroke-width: 2; cursor: pointer; }
   .site.main .dot { fill: var(--og1-blue); } .site.ccav .dot { fill: var(--og1-grey-700); }
-  .site .halo { fill: none; stroke-width: 1.2; opacity: .45; }
+  .site .halo { fill: none; stroke-width: 1.2; opacity: .45; cursor: pointer; }
   .site.main .halo { stroke: var(--og1-blue); } .site.ccav .halo { stroke: var(--og1-grey-700); }
-  .city { font-size: 14px; font-weight: 400; fill: var(--pure-black); paint-order: stroke; stroke: var(--white); stroke-width: 3px; stroke-linejoin: round; }
+  .city { font-size: 14px; font-weight: 400; fill: var(--pure-black); paint-order: stroke; stroke: var(--white); stroke-width: 3px; stroke-linejoin: round; cursor: pointer; }
   .box { fill: var(--white); stroke: var(--og1-grey-300); stroke-width: 1; filter: drop-shadow(0 2px 4px rgba(0, 0, 0, .11)); }
-  .site.on .box { stroke: var(--og1-blue); stroke-width: 2; }
+  .site.on .box, .site.selected .box { stroke: var(--og1-blue); stroke-width: 2; }
+  .site.card-hidden .leader, .site.card-hidden .card-box { display: none; }
   .accent.main { fill: var(--og1-blue); } .accent.ccav { fill: var(--og1-grey-700); }
   .t-country { font-size: 15px; font-weight: 600; fill: var(--pure-black); }
   .t-city { font-size: 13px; font-weight: 400; fill: var(--og1-grey-700); }
@@ -85,7 +103,19 @@
     <h1>América Latina + México</h1>
     <p>Data Lake por cidade sede: camadas Stage, Core, Data Marts e armazenamento</p>
   </div>
-  <div class="totals" id="totals"></div>
+  <div class="header-right">
+    <div class="totals" id="totals"></div>
+    <label class="toggle-ctrl" for="toggle-all-cards" title="Alternar entre exibir todos os cards de KPI ou apenas o país selecionado no mapa">
+      <div class="toggle-info">
+        <span class="toggle-title">Exibir Todos os Países</span>
+        <span class="toggle-status" id="toggle-status-lbl">Ativo ( todos os cards )</span>
+      </div>
+      <span class="switch">
+        <input type="checkbox" id="toggle-all-cards" checked>
+        <span class="slider"></span>
+      </span>
+    </label>
+  </div>
 </header>
 <main>
 <svg id="dash" viewBox="0 0 1280 860" role="img" aria-label="Mapa da América Latina e México com KPIs por cidade sede">
@@ -195,19 +225,24 @@ const LAYOUT = {
   UY: { grupo: 'main', side: 'R', slot: 5, lbl: 'b' }
 };
 
+const ISO3_TO_A2 = {
+  BRA: 'BR', ARG: 'AR', MEX: 'MX', CHL: 'CL', ECU: 'EC',
+  URY: 'UY', VEN: 'VE', CRI: 'CR', PRY: 'PY', BOL: 'BO', DOM: 'DO'
+};
+
 // Fallback local idêntico a latam-datalake-info.json (permite abrir via file:// sem servidor web)
 const FALLBACK_DATA = [
-  { "country-code": "BR", "country-name": "Brasil", "url-flag": "https://flagcdn.com/w80/br.png", "city-office": "Brasília", "product-owner-name": "Carlos Eduardo Silva", "qty-stage": 640, "qty-core": 486, "qty-mart": 142, "list-mart": ["mart_sales_br", "mart_commercial_excellence", "mart_supply_chain", "mart_patient_journey", "mart_finance_controlling", "mart_medical_affairs"], "storage-mart-gb": 68400, "storate-core-gb": 220774 },
-  { "country-code": "AR", "country-name": "Argentina", "url-flag": "https://flagcdn.com/w80/ar.png", "city-office": "Buenos Aires", "product-owner-name": "Martín Gómez", "qty-stage": 340, "qty-core": 257, "qty-mart": 78, "list-mart": ["mart_sales_ar", "mart_market_access", "mart_supply_chain", "mart_finance_ar", "mart_crm_engagement"], "storage-mart-gb": 31200, "storate-core-gb": 99430 },
-  { "country-code": "MX", "country-name": "México", "url-flag": "https://flagcdn.com/w80/mx.png", "city-office": "Cidade do México", "product-owner-name": "Alejandra Hernández", "qty-stage": 290, "qty-core": 212, "qty-mart": 64, "list-mart": ["mart_sales_mx", "mart_omnicanal_crm", "mart_patient_support", "mart_supply_chain", "mart_finance_mx"], "storage-mart-gb": 27600, "storate-core-gb": 88473 },
-  { "country-code": "CL", "country-name": "Chile", "url-flag": "https://flagcdn.com/w80/cl.png", "city-office": "Santiago", "product-owner-name": "Camila Rojas", "qty-stage": 180, "qty-core": 131, "qty-mart": 42, "list-mart": ["mart_sales_cl", "mart_hospital_tenders", "mart_supply_chain", "mart_finance_cl"], "storage-mart-gb": 14200, "storate-core-gb": 43827 },
-  { "country-code": "EC", "country-name": "Equador", "url-flag": "https://flagcdn.com/w80/ec.png", "city-office": "Quito", "product-owner-name": "Diego Andrade", "qty-stage": 98, "qty-core": 73, "qty-mart": 24, "list-mart": ["mart_sales_ec", "mart_commercial_ec", "mart_inventory_ec"], "storage-mart-gb": 6800, "storate-core-gb": 21811 },
-  { "country-code": "UY", "country-name": "Uruguai", "url-flag": "https://flagcdn.com/w80/uy.png", "city-office": "Montevidéu", "product-owner-name": "Lucía Fernández", "qty-stage": 84, "qty-core": 62, "qty-mart": 19, "list-mart": ["mart_sales_uy", "mart_diagnostics_uy", "mart_finance_uy"], "storage-mart-gb": 4900, "storate-core-gb": 14848 },
-  { "country-code": "VE", "country-name": "Venezuela", "url-flag": "https://flagcdn.com/w80/ve.png", "city-office": "Caracas", "product-owner-name": "Andrés Mendoza", "qty-stage": 76, "qty-core": 57, "qty-mart": 16, "list-mart": ["mart_sales_ve", "mart_distribution_ve", "mart_regulatory_ccav"], "storage-mart-gb": 4100, "storate-core-gb": 13209 },
-  { "country-code": "CR", "country-name": "Costa Rica", "url-flag": "https://flagcdn.com/w80/cr.png", "city-office": "San José", "product-owner-name": "Valeria Vargas", "qty-stage": 65, "qty-core": 48, "qty-mart": 15, "list-mart": ["mart_sales_ccav", "mart_hub_central_america", "mart_patient_access_cr"], "storage-mart-gb": 3200, "storate-core-gb": 9932 },
-  { "country-code": "PY", "country-name": "Paraguai", "url-flag": "https://flagcdn.com/w80/py.png", "city-office": "Assunção", "product-owner-name": "Rodrigo Benítez", "qty-stage": 56, "qty-core": 41, "qty-mart": 12, "list-mart": ["mart_sales_py", "mart_distributor_sellout", "mart_finance_py"], "storage-mart-gb": 2700, "storate-core-gb": 8601 },
-  { "country-code": "BO", "country-name": "Bolívia", "url-flag": "https://flagcdn.com/w80/bo.png", "city-office": "La Paz", "product-owner-name": "Fernando Quispe", "qty-stage": 48, "qty-core": 35, "qty-mart": 10, "list-mart": ["mart_sales_bo", "mart_commercial_bo", "mart_supply_bo"], "storage-mart-gb": 1950, "storate-core-gb": 6348 },
-  { "country-code": "DO", "country-name": "Caribe", "url-flag": "https://flagcdn.com/w80/do.png", "city-office": "Santo Domingo", "product-owner-name": "Gabriela Reyes", "qty-stage": 40, "qty-core": 29, "qty-mart": 9, "list-mart": ["mart_sales_caribe", "mart_island_distribution", "mart_finance_ccav"], "storage-mart-gb": 1600, "storate-core-gb": 5222 }
+  { "country-code": "bra", "country-name": "Brazil", "url-flag": "https://flagcdn.com/w80/br.png", "city-office": "São Paulo", "office-address": "Rua Dr. Rubens Gomes Bueno, 691 - Várzea de Baixo, São Paulo - SP, 04730-903, Brasil", "product-owner-name": "Carlos Eduardo Silva", "qty-stage": 640, "qty-core": 486, "qty-mart": 142, "list-mart": ["mart_sales_br", "mart_commercial_excellence", "mart_supply_chain", "mart_patient_journey", "mart_finance_controlling", "mart_medical_affairs"], "storage-mart-gb": 68400, "storate-core-gb": 220774 },
+  { "country-code": "arg", "country-name": "Argentina", "url-flag": "https://flagcdn.com/w80/ar.png", "city-office": "Buenos Aires", "office-address": "Rawson 3150, Ricardo Rojas, Tigre, B1610BAL Buenos Aires, Argentina", "product-owner-name": "Martín Gómez", "qty-stage": 340, "qty-core": 257, "qty-mart": 78, "list-mart": ["mart_sales_ar", "mart_market_access", "mart_supply_chain", "mart_finance_ar", "mart_crm_engagement"], "storage-mart-gb": 31200, "storate-core-gb": 99430 },
+  { "country-code": "mex", "country-name": "Mexico", "url-flag": "https://flagcdn.com/w80/mx.png", "city-office": "Cidade do México", "office-address": "Cerrada de Bezares 9, Colonia Lomas de Bezares, Alcaldía Miguel Hidalgo, C.P. 11910, Ciudad de México, México", "product-owner-name": "Alejandra Hernández", "qty-stage": 290, "qty-core": 212, "qty-mart": 64, "list-mart": ["mart_sales_mx", "mart_omnicanal_crm", "mart_patient_support", "mart_supply_chain", "mart_finance_mx"], "storage-mart-gb": 27600, "storate-core-gb": 88473 },
+  { "country-code": "chl", "country-name": "Chile", "url-flag": "https://flagcdn.com/w80/cl.png", "city-office": "Santiago", "office-address": "Avenida Cerro El Plomo 5630, Piso 12, Las Condes, 7550000 Santiago, Chile", "product-owner-name": "Camila Rojas", "qty-stage": 180, "qty-core": 131, "qty-mart": 42, "list-mart": ["mart_sales_cl", "mart_hospital_tenders", "mart_supply_chain", "mart_finance_cl"], "storage-mart-gb": 14200, "storate-core-gb": 43827 },
+  { "country-code": "ecu", "country-name": "Ecuador", "url-flag": "https://flagcdn.com/w80/ec.png", "city-office": "Quito", "office-address": "Av. Simón Bolívar y Vía a Nayón, Centro Corporativo EKOPARK, Torre 5, Piso 2, Quito, Ecuador", "product-owner-name": "Diego Andrade", "qty-stage": 98, "qty-core": 73, "qty-mart": 24, "list-mart": ["mart_sales_ec", "mart_commercial_ec", "mart_inventory_ec"], "storage-mart-gb": 6800, "storate-core-gb": 21811 },
+  { "country-code": "ury", "country-name": "Uruguay", "url-flag": "https://flagcdn.com/w80/uy.png", "city-office": "Montevidéu", "office-address": "Dr. Luis Bonavita 1266, Edificio WTC Montevideo, Torre IV, Piso 33, 11300 Montevideo, Uruguay", "product-owner-name": "Lucía Fernández", "qty-stage": 84, "qty-core": 62, "qty-mart": 19, "list-mart": ["mart_sales_uy", "mart_diagnostics_uy", "mart_finance_uy"], "storage-mart-gb": 4900, "storate-core-gb": 14848 },
+  { "country-code": "ven", "country-name": "Venezuela", "url-flag": "https://flagcdn.com/w80/ve.png", "city-office": "Caracas", "office-address": "Av. Principal de La Castellana con Calle José Ángel Lamas, Torre La Castellana, Piso 5, Of. 5-I, Chacao, 1062 Caracas, Venezuela", "product-owner-name": "Andrés Mendoza", "qty-stage": 76, "qty-core": 57, "qty-mart": 16, "list-mart": ["mart_sales_ve", "mart_distribution_ve", "mart_regulatory_ccav"], "storage-mart-gb": 4100, "storate-core-gb": 13209 },
+  { "country-code": "cri", "country-name": "Costa Rica", "url-flag": "https://flagcdn.com/w80/cr.png", "city-office": "San José", "office-address": "Roche Costa Rica Campus, Av. de las Américas, Sabana Norte, Mata Redonda, 10108 San José, Costa Rica", "product-owner-name": "Valeria Vargas", "qty-stage": 65, "qty-core": 48, "qty-mart": 15, "list-mart": ["mart_sales_ccav", "mart_hub_central_america", "mart_patient_access_cr"], "storage-mart-gb": 3200, "storate-core-gb": 9932 },
+  { "country-code": "pry", "country-name": "Paraguay", "url-flag": "https://flagcdn.com/w80/py.png", "city-office": "Assunção", "office-address": "Av. Santa Teresa entre Aviadores del Chaco y Herminio Maldonado, Paseo La Galería, Torre 2, Piso 16, Asunción, Paraguay", "product-owner-name": "Rodrigo Benítez", "qty-stage": 56, "qty-core": 41, "qty-mart": 12, "list-mart": ["mart_sales_py", "mart_distributor_sellout", "mart_finance_py"], "storage-mart-gb": 2700, "storate-core-gb": 8601 },
+  { "country-code": "bol", "country-name": "Bolivia", "url-flag": "https://flagcdn.com/w80/bo.png", "city-office": "La Paz", "office-address": "Av. Ballivián N° 555, Edificio El Dorial, Piso 18, Calacoto, La Paz, Bolivia", "product-owner-name": "Fernando Quispe", "qty-stage": 48, "qty-core": 35, "qty-mart": 10, "list-mart": ["mart_sales_bo", "mart_commercial_bo", "mart_supply_bo"], "storage-mart-gb": 1950, "storate-core-gb": 6348 },
+  { "country-code": "dom", "country-name": "Caribbean", "url-flag": "https://flagcdn.com/w80/do.png", "city-office": "Santo Domingo", "office-address": "Av. Winston Churchill Esq. Paseo de los Locutores, Plaza Las Américas II, Local Y 28 B, Santo Domingo, República Dominicana", "product-owner-name": "Gabriela Reyes", "qty-stage": 40, "qty-core": 29, "qty-mart": 9, "list-mart": ["mart_sales_caribe", "mart_island_distribution", "mart_finance_ccav"], "storage-mart-gb": 1600, "storate-core-gb": 5222 }
 ];
 
 const MAP = { x: 295, y: 37, scale: 0.69 };            // posição/escala do mapa no painel (mesmos valores do transform)
@@ -215,6 +250,10 @@ const BOX = { w: 280, h: 118, gap: 16, top: 28, leftX: 6, rightX: 994 };
 const NS = 'http://www.w3.org/2000/svg';
 const nf = new Intl.NumberFormat('pt-BR');
 const fmtTB = gb => (gb / 1024).toLocaleString('pt-BR', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+
+let showAllCards = true;
+let selectedCountry = null;
+const siteElements = new Map(); // a2 -> { g, pais, site }
 
 function el(tag, attrs, parent, text) {
   const e = document.createElementNS(NS, tag);
@@ -241,9 +280,14 @@ async function loadDatalakeInfo() {
   }
 }
 
+function normalizeA2(code) {
+  const up = String(code || '').trim().toUpperCase();
+  return ISO3_TO_A2[up] || up;
+}
+
 function mapSites(rawList) {
   return rawList.map(item => {
-    const a2 = item['country-code'];
+    const a2 = normalizeA2(item['country-code']);
     const cfg = LAYOUT[a2] || { grupo: 'main', side: 'R', slot: 0, lbl: 'r' };
     const storageMartGB = Number(item['storage-mart-gb'] || 0);
     const storageCoreGB = Number(item['storate-core-gb'] ?? item['storage-core-gb'] ?? 0);
@@ -252,6 +296,7 @@ function mapSites(rawList) {
       pais: item['country-name'],
       flag: item['url-flag'],
       cidade: item['city-office'],
+      endereco: item['office-address'] || '',
       po: item['product-owner-name'],
       qtyStage: Number(item['qty-stage'] || 0),
       qtyCore: Number(item['qty-core'] || 0),
@@ -274,17 +319,64 @@ function renderTotals(sites) {
     <div><b>${fmtTB(sum('totalStorageGB'))} TB</b><span>Storage Total (Core + Mart)</span></div>`;
 }
 
+function updateCardsVisibility() {
+  const statusLbl = document.getElementById('toggle-status-lbl');
+  if (showAllCards) {
+    statusLbl.textContent = 'Ativo (todos os cards)';
+  } else {
+    const selSite = selectedCountry ? siteElements.get(selectedCountry)?.site : null;
+    statusLbl.textContent = selSite
+      ? `Inativo (${selSite.pais} selecionado)`
+      : 'Inativo (clique em um país no mapa)';
+  }
+
+  siteElements.forEach(({ g, pais }, a2) => {
+    const isSelected = selectedCountry === a2;
+    const visible = showAllCards || isSelected;
+    g.classList.toggle('card-hidden', !visible);
+    g.classList.toggle('selected', !showAllCards && isSelected);
+    if (pais) pais.classList.toggle('selected', !showAllCards && isSelected);
+  });
+}
+
+function selectCountryOnMap(a2) {
+  if (!siteElements.has(a2)) return;
+  if (!showAllCards) {
+    selectedCountry = selectedCountry === a2 ? null : a2;
+  } else {
+    selectedCountry = a2;
+  }
+  updateCardsVisibility();
+}
+
 async function init() {
   const raw = await loadDatalakeInfo();
   const sites = mapSites(raw);
   renderTotals(sites);
 
+  const toggleInput = document.getElementById('toggle-all-cards');
+  toggleInput.addEventListener('change', e => {
+    showAllCards = e.target.checked;
+    updateCardsVisibility();
+  });
+
   const root = document.getElementById('sedes');
   root.innerHTML = '';
+  siteElements.clear();
 
   sites.forEach(s => {
     const pais = document.getElementById(s.a2);
-    if (pais) { pais.classList.add('projeto'); if (s.grupo === 'ccav') pais.classList.add('ccav'); }
+    const capMapGroup = document.getElementById('cap-' + s.a2);
+    if (pais) {
+      pais.classList.add('projeto');
+      if (s.grupo === 'ccav') pais.classList.add('ccav');
+    }
+    if (capMapGroup) {
+      capMapGroup.setAttribute('data-projeto', '1');
+      // Atualiza o rótulo da cidade no mapa base caso tenha mudado no JSON
+      const rotulo = capMapGroup.querySelector('.rotulo');
+      if (rotulo) rotulo.textContent = s.cidade;
+    }
 
     const [px, py] = capPos(s.a2);
     const bx = s.side === 'L' ? BOX.leftX : BOX.rightX;
@@ -293,15 +385,15 @@ async function init() {
     const ey = by + BOX.h / 2;
     const elbow = s.side === 'L' ? ex + 24 : ex - 24;
 
-    const g = el('g', { class: 'site ' + s.grupo, tabindex: 0 }, root);
-    el('title', {}, g, `${s.pais} (${s.cidade})\nPO: ${s.po}\nMarts (${s.listMart.length}): ${s.listMart.join(', ')}\nStorage Core: ${fmtTB(s.storageCoreGB)} TB (${nf.format(s.storageCoreGB)} GB)\nStorage Mart: ${fmtTB(s.storageMartGB)} TB (${nf.format(s.storageMartGB)} GB)`);
+    const g = el('g', { class: 'site ' + s.grupo, tabindex: 0, 'data-a2': s.a2 }, root);
+    el('title', {}, g, `${s.pais} (${s.cidade})${s.endereco ? '\nEndereço: ' + s.endereco : ''}\nPO: ${s.po}\nMarts (${s.listMart.length}): ${s.listMart.join(', ')}\nStorage Core: ${fmtTB(s.storageCoreGB)} TB (${nf.format(s.storageCoreGB)} GB)\nStorage Mart: ${fmtTB(s.storageMartGB)} TB (${nf.format(s.storageMartGB)} GB)`);
     el('polyline', { class: 'leader', points: `${ex},${ey} ${elbow},${ey} ${px},${py}` }, g);
-    el('circle', { class: 'halo', cx: px, cy: py, r: 9 }, g);
-    el('circle', { class: 'dot', cx: px, cy: py, r: 5.5 }, g);
+    const halo = el('circle', { class: 'halo', cx: px, cy: py, r: 9 }, g);
+    const dot = el('circle', { class: 'dot', cx: px, cy: py, r: 5.5 }, g);
     const L = { r: [px + 10, py - 9, 'start'], l: [px - 10, py - 9, 'end'], b: [px + 10, py + 20, 'start'] }[s.lbl];
-    el('text', { class: 'city', x: L[0], y: L[1], 'text-anchor': L[2] }, g, s.cidade);
+    const cityTxt = el('text', { class: 'city', x: L[0], y: L[1], 'text-anchor': L[2] }, g, s.cidade);
 
-    const b = el('g', { transform: `translate(${bx},${by})` }, g);
+    const b = el('g', { class: 'card-box', transform: `translate(${bx},${by})` }, g);
     el('rect', { class: 'box', width: BOX.w, height: BOX.h, rx: 6 }, b);
     el('rect', { class: 'accent ' + s.grupo, width: 4, height: BOX.h - 24, x: 0, y: 12 }, b);
 
@@ -324,12 +416,26 @@ async function init() {
       if (sub) el('text', { class: 't-sub', x, y: 107 }, b, sub);
     });
 
+    siteElements.set(s.a2, { g, pais, site: s });
+
     const on = f => { g.classList.toggle('on', f); if (pais) pais.classList.toggle('on', f); };
     g.addEventListener('mouseenter', () => on(true));
     g.addEventListener('mouseleave', () => on(false));
     g.addEventListener('focus', () => on(true));
     g.addEventListener('blur', () => on(false));
+
+    // Interação de clique e hover no país do mapa e no marcador da cidade
+    [pais, capMapGroup, halo, dot, cityTxt].filter(Boolean).forEach(target => {
+      target.addEventListener('click', e => {
+        e.stopPropagation();
+        selectCountryOnMap(s.a2);
+      });
+      target.addEventListener('mouseenter', () => on(true));
+      target.addEventListener('mouseleave', () => on(false));
+    });
   });
+
+  updateCardsVisibility();
 }
 init();
 </script>
